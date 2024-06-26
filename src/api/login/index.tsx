@@ -8,7 +8,7 @@ export const authVerify = async ({ mobile, token }: { mobile: string, token: str
             refreshToken: string;
             expiration: number;
         }>(
-            '/auth/verify',
+            'end-point',
             {
                 mobile,
                 token,
@@ -26,14 +26,14 @@ export const authRefreshToken = (rt?: string) =>
             accessToken: string;
             refreshToken: string;
             expiration: number;
-        }>('/auth/refresh-token', { refresh: rt }, { withCredentials: true })
+        }>('end-point', { refresh: rt }, { withCredentials: true })
         .then(({ data }) => data);
 
 
 export const logout = async () => {
     const token = await getSession();
     return api
-        .post('/auth/logout', {
+        .post('end-point', {
             refresh: token?.refreshToken,
         })
         .then(({ data }) => data);
