@@ -24,7 +24,8 @@ const OtpForm = () => {
         })
             .then((data: any) => {
                 if (data.status === 200) {
-                    router.push('/');
+                    window.location.href = window.location.origin
+
                 } else {
                     const error = JSON.parse(data.error);
                     console.log("error", error)
@@ -44,8 +45,8 @@ const OtpForm = () => {
     return (
         <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-[300px] m-auto'>
 
-            <input type='text' value={mobile} onChange={(e => setMobile(e.target.value))} placeholder='mobile' />
-            <input type='text' value={token} onChange={(e => setToken(e.target.value))} placeholder='token' />
+            <input type='text' value={mobile} className='text-gray-900' onChange={(e => setMobile(e.target.value))} placeholder='mobile' />
+            <input type='text' value={token} className='text-gray-900' onChange={(e => setToken(e.target.value))} placeholder='token' />
 
             <button>{isPending ? "...loading" : "login"}</button>
         </form>

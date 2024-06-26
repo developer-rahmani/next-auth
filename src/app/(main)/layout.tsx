@@ -1,4 +1,3 @@
-import NextAuthProvider from "@/provider/next-auth-provider";
 import Header from "@/components/header";
 
 

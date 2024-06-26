@@ -1,13 +1,15 @@
-"use client"
 
-import { signOut, useSession } from "next-auth/react"
+import { logout } from "@/api/login"
+import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/authOptions"
 import Link from "next/link"
+import LogoutButton from "./logout-button"
 
-const Header = () => {
-    const { data, status } = useSession()
+const Header = async () => {
+    const data = await getServerAuthSession()
+
     return (
         <div className="flex items-center w-full h-[60px] bg-gray-900 p-[12px]">
-            {status === 'authenticated' ? <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}>logout</button> : status === "unauthenticated" ? <Link href="/login">login</Link> : null}
+            {data?.isLogged ? <LogoutButton /> : <Link href="/login">login</Link>}
         </div>
     )
 }

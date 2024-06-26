@@ -1,4 +1,5 @@
 import { api } from "@/api";
+import { getSession } from "next-auth/react";
 
 export const authVerify = async ({ mobile, token }: { mobile: string, token: string }) => {
     return api
@@ -7,7 +8,7 @@ export const authVerify = async ({ mobile, token }: { mobile: string, token: str
             refreshToken: string;
             expiration: number;
         }>(
-            'end-point',
+            '/auth/verify',
             {
                 mobile,
                 token,
@@ -25,6 +26,15 @@ export const authRefreshToken = (rt?: string) =>
             accessToken: string;
             refreshToken: string;
             expiration: number;
-        }>('end-point', { refresh: rt }, { withCredentials: true })
+        }>('/auth/refresh-token', { refresh: rt }, { withCredentials: true })
         .then(({ data }) => data);
 
+
+export const logout = async () => {
+    const token = await getSession();
+    return api
+        .post('/auth/logout', {
+            refresh: token?.refreshToken,
+        })
+        .then(({ data }) => data);
+};
